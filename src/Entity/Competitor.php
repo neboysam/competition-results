@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CompetitorRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,22 @@ class Competitor
      * @ORM\Column(type="string", length=255)
      */
     private $city;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Result::class, mappedBy="competitor_id")
+     */
+    private $results;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="competitors")
+     */
+    private $categories;
+
+    public function __construct()
+    {
+        $this->results = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +104,60 @@ class Competitor
     public function setCity(string $city): self
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Result>
+     */
+    public function getResults(): Collection
+    {
+        return $this->results;
+    }
+
+    public function addResult(Result $result): self
+    {
+        if (!$this->results->contains($result)) {
+            $this->results[] = $result;
+            $result->setCompetitorId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeResult(Result $result): self
+    {
+        if ($this->results->removeElement($result)) {
+            // set the owning side to null (unless already changed)
+            if ($result->getCompetitorId() === $this) {
+                $result->setCompetitorId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        $this->categories->removeElement($category);
 
         return $this;
     }
