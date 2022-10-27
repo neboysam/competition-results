@@ -60,7 +60,7 @@ class CompetitorController extends AbstractController
             );
 
             $this->entityManager->persist($fileUpload);
-            //$this->entityManager->flush();
+            $this->entityManager->flush();
         
             $inputFileType = 'Xlsx';
             $inputFileName = '../public/uploads/participants.xlsx';

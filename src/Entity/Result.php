@@ -21,19 +21,19 @@ class Result
      * @ORM\ManyToOne(targetEntity=Competitor::class, inversedBy="results")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $competitor_id;
+    private $competitor;
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="results")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $category_id;
+    private $category;
 
     /**
      * @ORM\ManyToOne(targetEntity=Competition::class, inversedBy="results")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $competition_id;
+    private $competition;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -55,38 +55,38 @@ class Result
         return $this->id;
     }
 
-    public function getCompetitorId(): ?Competitor
+    public function getCompetitor(): ?Competitor
     {
-        return $this->competitor_id;
+        return $this->competitor;
     }
 
-    public function setCompetitorId(?Competitor $competitor_id): self
+    public function setCompetitor(?Competitor $competitor): self
     {
-        $this->competitor_id = $competitor_id;
+        $this->competitor = $competitor;
 
         return $this;
     }
 
-    public function getCategoryId(): ?Category
+    public function getCategory(): ?Category
     {
-        return $this->category_id;
+        return $this->category;
     }
 
-    public function setCategoryId(?Category $category_id): self
+    public function setCategory(?Category $category): self
     {
-        $this->category_id = $category_id;
+        $this->category = $category;
 
         return $this;
     }
 
-    public function getCompetitionId(): ?Competition
+    public function getCompetition(): ?Competition
     {
-        return $this->competition_id;
+        return $this->competition;
     }
 
-    public function setCompetitionId(?Competition $competition_id): self
+    public function setCompetition(?Competition $competition): self
     {
-        $this->competition_id = $competition_id;
+        $this->competition = $competition;
 
         return $this;
     }

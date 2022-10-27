@@ -35,7 +35,7 @@ class Competition
     private $results;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string", length=255)
      */
     private $competition_year;
 
@@ -85,7 +85,7 @@ class Competition
     {
         if (!$this->results->contains($result)) {
             $this->results[] = $result;
-            $result->setCompetitionId($this);
+            $result->setCompetition($this);
         }
 
         return $this;
@@ -95,8 +95,8 @@ class Competition
     {
         if ($this->results->removeElement($result)) {
             // set the owning side to null (unless already changed)
-            if ($result->getCompetitionId() === $this) {
-                $result->setCompetitionId(null);
+            if ($result->getCompetition() === $this) {
+                $result->setCompetition(null);
             }
         }
 
