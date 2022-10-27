@@ -34,6 +34,11 @@ class Competition
      */
     private $results;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $competition_year;
+
     public function __construct()
     {
         $this->results = new ArrayCollection();
@@ -94,6 +99,18 @@ class Competition
                 $result->setCompetitionId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCompetitionYear(): ?\DateTimeInterface
+    {
+        return $this->competition_year;
+    }
+
+    public function setCompetitionYear(\DateTimeInterface $competition_year): self
+    {
+        $this->competition_year = $competition_year;
 
         return $this;
     }
