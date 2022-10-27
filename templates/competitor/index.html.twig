@@ -1,20 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CompetitorController!{% endblock %}
+{% block title %}Liste des participants{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="row">
+        <div class="col-md-9 mx-auto my-4">
+            <h1 class="text-center mb-3">Liste des participants</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Ville</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for competitor in competitors %}
+                    <tr>
+                        <td>{{ competitor.id }}</td>
+                        <td>{{ competitor.firstname }} {{ competitor.lastname }}</td>
+                        <td>{{ competitor.email }}</td>
+                        <td>{{ competitor.city }}</td>
+                        <td>
+                            <a href="" class="btn btn-sm btn-success">Show</a>
+                            <a href="" class="btn btn-sm btn-danger">Edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="8">No records found.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'D:/6. Mes projets/14.2. Symfony_competition-results/src/Controller/CompetitorController.php'|file_link(0) }}">src/Controller/CompetitorController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/6. Mes projets/14.2. Symfony_competition-results/templates/competitor/index.html.twig'|file_link(0) }}">templates/competitor/index.html.twig</a></code></li>
-    </ul>
-</div>
+            <a href="" class="btn btn-info">Ajouter un nouveau participant</a>
+        </div>
+    </div>
 {% endblock %}
+

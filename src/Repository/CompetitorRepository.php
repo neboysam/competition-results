@@ -38,6 +38,11 @@ class CompetitorRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    
+    public function findAll()
+    {
+        return $this->findBy([], ['city' => 'ASC']);
+    }
 
 //    /**
 //     * @return Competitor[] Returns an array of Competitor objects

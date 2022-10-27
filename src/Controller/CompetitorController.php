@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Competitor;
 use App\Entity\CompetitorFileUpload;
 use App\Form\CompetitorFileUploadType;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -24,10 +25,10 @@ class CompetitorController extends AbstractController
      */
     public function index(): Response
     {        
-        
+        $competitors = $this->entityManager->getRepository(Competitor::class)->findAll();
 
         return $this->render('competitor/index.html.twig', [
-            'controller_name' => 'FormController'
+            'competitors' => $competitors
         ]);
     }
 
@@ -86,7 +87,7 @@ class CompetitorController extends AbstractController
                 if(!$conn->query($sql)) {
                     echo "Error: " . $sql . "<br>" . $conn->error;
                 }
-                
+
                 /* if($conn->query($sql) == 'TRUE') {
                     echo "Row $row inserted successfully";
                 } else {
