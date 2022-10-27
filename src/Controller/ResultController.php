@@ -77,22 +77,17 @@ class ResultController extends AbstractController
             /* if($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
             } */
-            $sql1 = '';
-            $sql2 = '';
+            $sql = '';
             
             for($row = 2; $row <= count($sheetData); $row++) {
                 $result_string = "'" . implode("', '", $sheetData[$row]) . "'";
                 //var_dump($xx);
-                $competitor_category_string = substr($result_string, 36, 8);
+                //$competitor_category_string = substr($result_string, 36, 8);
                 
-                $sql1 = "INSERT INTO result (result1, result2, final_result, competitor_id, category_id, competition_id) VALUES ($result_string);";
-                $sql2 = "INSERT INTO competitor_category (competitor_id, category_id) VALUES ($competitor_category_string);";
-
-                if(!$conn->query($sql1)) {
-                    echo "Error: " . $sql1 . "<br>" . $conn->error;
-                }
-                if(!$conn->query($sql2)) {
-                    echo "Error: " . $sql2 . "<br>" . $conn->error;
+                $sql = "INSERT INTO result (result1, result2, final_result, competitor_id, category_id, competition_id) VALUES ($result_string);";
+                
+                if(!$conn->query($sql)) {
+                    echo "Error: " . $sql . "<br>" . $conn->error;
                 }
 
                 /* if($conn->query($sql) == 'TRUE') {

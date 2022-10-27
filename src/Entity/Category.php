@@ -86,7 +86,7 @@ class Category
     {
         if (!$this->results->contains($result)) {
             $this->results[] = $result;
-            $result->setCategoryId($this);
+            $result->setCategory($this);
         }
 
         return $this;
@@ -96,8 +96,8 @@ class Category
     {
         if ($this->results->removeElement($result)) {
             // set the owning side to null (unless already changed)
-            if ($result->getCategoryId() === $this) {
-                $result->setCategoryId(null);
+            if ($result->getCategory() === $this) {
+                $result->setCategory(null);
             }
         }
 

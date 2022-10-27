@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Competitor;
+use App\Form\CompetitorType;
 use App\Entity\CompetitorFileUpload;
 use App\Form\CompetitorFileUploadType;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -33,7 +34,27 @@ class CompetitorController extends AbstractController
     }
 
     /**
-     * @Route("/participants/ajouter", name="app_add_competitors")
+     * @Route("/participants/ajouter", name="app_competitor")
+     */
+    public function new(Request $request): Response
+    {        
+        $competitor = new Competitor();
+        $form = $this->createForm(CompetitorType::class, $competitor);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->persist($competitor);
+            $this->entityManager->flush();
+            return $this->redirectToRoute('app_competitors');
+        }
+
+        return $this->render('competitor/new.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/participants/ajouter-fichier", name="app_add_competitor_file")
      */
     public function add(Request $request): Response
     {   

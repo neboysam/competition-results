@@ -120,7 +120,7 @@ class Competitor
     {
         if (!$this->results->contains($result)) {
             $this->results[] = $result;
-            $result->setCompetitorId($this);
+            $result->setCompetitor($this);
         }
 
         return $this;
@@ -130,8 +130,8 @@ class Competitor
     {
         if ($this->results->removeElement($result)) {
             // set the owning side to null (unless already changed)
-            if ($result->getCompetitorId() === $this) {
-                $result->setCompetitorId(null);
+            if ($result->getCompetitor() === $this) {
+                $result->setCompetitor(null);
             }
         }
 

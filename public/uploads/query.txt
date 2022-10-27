@@ -1,0 +1,4 @@
+SELECT DISTINCT c.firstname, c.lastname, c.city, a.category_name, r.final_result from competitor c,
+category a, result r, competition o
+WHERE c.id = r.competitor_id AND r.category_id = a.id AND o.id = r.competition_id AND a.category_name = "Générales hommes"
+ORDER BY r.final_result
