@@ -24,12 +24,31 @@ class ResultController extends AbstractController
      * @Route("/resultats/general-hommes", name="app_men_general")
      */
     public function menGeneral(): Response
-    {        
+    {   
+        $message = 'Générales Hommes';
+
         $competitors = $this->entityManager->getRepository(Result::class)->menGeneral();
         //dd($competitors);
 
-        return $this->render('result/men_general.html.twig', [
-            'competitors' => $competitors
+        return $this->render('result/index.html.twig', [
+            'competitors' => $competitors,
+            'message' => $message
+        ]);
+    }
+
+    /**
+     * @Route("/resultats/general-femmes", name="app_women_general")
+     */
+    public function womenGeneral(): Response
+    {   
+        $message = 'Générales Femmes';
+
+        $competitors = $this->entityManager->getRepository(Result::class)->womenGeneral();
+        //dd($competitors);
+
+        return $this->render('result/index.html.twig', [
+            'competitors' => $competitors,
+            'message' => $message
         ]);
     }
 
