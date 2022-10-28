@@ -39,6 +39,24 @@ class ResultRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @return Result[] Returns an array of Result objects
+     */
+
+    public function menGeneral() 
+    {
+        $query = $this->createQueryBuilder('result')
+            ->select('competitor.firstname, competitor.lastname, competitor.city, category.category_name, result.final_result')
+            ->join('result.competitor', 'competitor')
+            ->join('result.category', 'category')
+            ->join('result.competition', 'competition')        
+            ->andWhere('category.category_name = :category_name')
+            ->setParameter('category_name', "Générales hommes")
+            ->orderBy('result.final_result', 'ASC');
+        
+        return $query->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Result[] Returns an array of Result objects
 //     */

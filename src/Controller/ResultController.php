@@ -25,9 +25,10 @@ class ResultController extends AbstractController
      */
     public function menGeneral(): Response
     {        
-        $competitors = $this->entityManager->getRepository(Result::class)->findAll();
+        $competitors = $this->entityManager->getRepository(Result::class)->menGeneral();
+        //dd($competitors);
 
-        return $this->render('competitor/index.html.twig', [
+        return $this->render('result/men_general.html.twig', [
             'competitors' => $competitors
         ]);
     }
@@ -35,7 +36,7 @@ class ResultController extends AbstractController
     /**
      * @Route("/resultats/ajouter", name="app_add_results")
      */
-    public function add(Request $request): Response
+    public function addFile(Request $request): Response
     {   
         $fileUpload = new ResultFileUpload();
              
@@ -60,7 +61,7 @@ class ResultController extends AbstractController
             );
 
             $this->entityManager->persist($fileUpload);
-            //$this->entityManager->flush();
+            $this->entityManager->flush();
         
             $inputFileType = 'Xlsx';
             $inputFileName = '../public/uploads/resultats.xlsx';
@@ -99,7 +100,7 @@ class ResultController extends AbstractController
         }
         /** End of PHPSpreadsheet solution */
 
-        return $this->render('result/add.html.twig', [
+        return $this->render('result/add_file.html.twig', [
             'form' => $form->createView()
         ]);
     }

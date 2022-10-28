@@ -39,6 +39,11 @@ class Category
      */
     private $competitors;
 
+    public function __toString()
+    {
+        return $this->getCategoryName();
+    }
+
     public function __construct()
     {
         $this->results = new ArrayCollection();

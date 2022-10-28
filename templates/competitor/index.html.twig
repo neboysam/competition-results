@@ -14,6 +14,7 @@
                         <th>Nom</th>
                         <th>Email</th>
                         <th>Ville</th>
+                        <th>Categories</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -24,6 +25,10 @@
                         <td>{{ competitor.firstname }} {{ competitor.lastname }}</td>
                         <td>{{ competitor.email }}</td>
                         <td>{{ competitor.city }}</td>
+                        <td>{% for categoryName in competitor.categories %}
+                                {{- categoryName -}}
+                                {% if loop.last == false %}, {% endif %}
+                            {% endfor %}</td>
                         <td>
                             <a href="" class="btn btn-sm btn-success">Show</a>
                             <a href="" class="btn btn-sm btn-danger">Edit</a>
