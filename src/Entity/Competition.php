@@ -103,12 +103,12 @@ class Competition
         return $this;
     }
 
-    public function getCompetitionYear(): ?\DateTimeInterface
+    public function getCompetitionYear(): ?string
     {
         return $this->competition_year;
     }
 
-    public function setCompetitionYear(\DateTimeInterface $competition_year): self
+    public function setCompetitionYear(?string $competition_year): self
     {
         $this->competition_year = $competition_year;
 

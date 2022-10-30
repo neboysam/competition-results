@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Result;
 use App\Entity\ResultFileUpload;
 use App\Form\ResultFileUploadType;
+use App\Form\SearchResultType;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,36 +22,35 @@ class ResultController extends AbstractController
     }
 
     /**
-     * @Route("/resultats/general-hommes", name="app_men_general")
+     * @Route("/resultats", name="app_results")
      */
-    public function menGeneral(): Response
+    public function results(Request $request): Response
     {   
-        $message = 'Générales Hommes';
+        $form = $this->createForm(SearchResultType::class, null);
 
-        $competitors = $this->entityManager->getRepository(Result::class)->menGeneral();
+        //$competitors = $this->entityManager->getRepository(Result::class)->menGeneral();
         //dd($competitors);
 
-        return $this->render('result/index.html.twig', [
-            'competitors' => $competitors,
-            'message' => $message
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            //dd($form->get('categoryName')->getData()->getCategoryName());
+            $category_name = $form->get('categoryName')->getData()->getCategoryName();
+            $competition_year = $form->get('competitionYear')->getData()->getCompetitionYear();
+            $competitors = $this->entityManager->getRepository(Result::class)->results($category_name, $competition_year);
+
+            return $this->render('result/index.html.twig', [
+                'competitors' => $competitors,
+                'message' => $category_name
+            ]);
+        }
+
+        return $this->render('result/result_form.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 
-    /**
-     * @Route("/resultats/general-femmes", name="app_women_general")
-     */
-    public function womenGeneral(): Response
-    {   
-        $message = 'Générales Femmes';
-
-        $competitors = $this->entityManager->getRepository(Result::class)->womenGeneral();
-        //dd($competitors);
-
-        return $this->render('result/index.html.twig', [
-            'competitors' => $competitors,
-            'message' => $message
-        ]);
-    }
+    
 
     /**
      * @Route("/resultats/ajouter", name="app_add_results")

@@ -43,7 +43,7 @@ class ResultRepository extends ServiceEntityRepository
      * @return Result[] Returns an array of Result objects
      */
 
-    public function menGeneral() 
+    public function results($category_name, $competition_year) 
     {
         $query = $this->createQueryBuilder('result')
             ->select('competitor.firstname, competitor.lastname, competitor.city, category.category_name, result.final_result')
@@ -51,25 +51,9 @@ class ResultRepository extends ServiceEntityRepository
             ->join('result.category', 'category')
             ->join('result.competition', 'competition')        
             ->andWhere('category.category_name = :category_name')
-            ->setParameter('category_name', "Générales hommes")
-            ->orderBy('result.final_result', 'ASC');
-        
-        return $query->getQuery()->getResult();
-    }
-
-    /**
-     * @return Result[] Returns an array of Result objects
-     */
-
-    public function womenGeneral() 
-    {
-        $query = $this->createQueryBuilder('result')
-            ->select('competitor.firstname, competitor.lastname, competitor.city, category.category_name, result.final_result')
-            ->join('result.competitor', 'competitor')
-            ->join('result.category', 'category')
-            ->join('result.competition', 'competition')        
-            ->andWhere('category.category_name = :category_name')
-            ->setParameter('category_name', "Générales femmes")
+            ->setParameter('category_name', $category_name)
+            ->andWhere('competition.competition_year = :competition_year')
+            ->setParameter('competition_year', $competition_year)
             ->orderBy('result.final_result', 'ASC');
         
         return $query->getQuery()->getResult();
